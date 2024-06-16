@@ -1,0 +1,12 @@
+1、NRSC-OP-EXE: includes the executable file of NRSC-OP and the necessary dlls.
+2、RootNodeRegions-8SVS: 8 root node regions of the Single-View-Surfaces. The other 8 root node regions of the fused indoor scenes cannot be uploaded due to the data size (over the limitation of 25M).
+3、INC_ratio_4Methods_300ScanNet.xls: the detailed INC_ratios of 4 compared methods on the first 300 ScanNet dataset.
+4、How to run NRSC-OP:
+	4-1、copy a connected region (point cloud, e.g. SVS1_Root.ply) into the NRSC-OP-EXE fold;
+	4-2、run NRSC-OP in the current path with following command: "normal_orienation_propagation_for_NRSC.exe --in SVS1_Root.ply  --out SVS1_Root_OP.ply";
+	4-3、the output SVS1_Root_OP.ply is the result file.
+5、This module is just a test to generate consistent normal orientation for an input point cloud (cover a single connected region). 
+
+
+
+
