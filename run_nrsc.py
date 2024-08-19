@@ -1,20 +1,35 @@
 from base_val import *
 
-# 并行处理
-for i in range(len(filelist)):
-    ori_path = orioutpath + '\\' + filenamelist[i]
-    o3d_path = o3destoutpath+'\\'+filenamelist[i]
-    hoppe_path = hoppeoutpath+'\\'+filenamelist[i]
+ori_idx = 0
+pca_idx = 0
+hoppe_idx = 0
+
+total_num = len(filelist) * 3
+
+while ori_idx < len(filelist) or pca_idx < len(filelist) or hoppe_idx < len(filelist):
+    pca_path = pcaoutpath+'\\'+filenamelist[pca_idx]
+    hoppe_path = hoppeoutpath+'\\'+filenamelist[hoppe_idx]
     
-    cmd = exe_path+' --in '+o3d_path+' --out '+ o3d_nrsc_path + filenamelist[i]
-    print(cmd)
-    os.system(cmd)
+    if ori_idx < len(filelist):
+        ori_path = orioutpath + '\\' + filenamelist[ori_idx]
+        if  os.path.exists(ori_path):        
+            cmd = exe_path+' --in '+ori_path+' --out '+ ori_nrsc_path + filenamelist[ori_idx]
+            print(cmd)
+            os.system(cmd)
+            ori_idx += 1
+
+    if pca_idx < len(filelist):
+        pca_path = pcaoutpath+'\\'+filenamelist[pca_idx]
+        if os.path.exists(pca_path):        
+            cmd = exe_path+' --in '+pca_path+' --out '+ pca_nrsc_path + filenamelist[pca_idx]
+            print(cmd)
+            os.system(cmd)
+            pca_idx += 1
     
-    cmd = exe_path+' --in '+ori_path+' --out '+ ori_nrsc_path + filenamelist[i]
-    print(cmd)
-    os.system(cmd)
-    
-    cmd = exe_path+' --in '+hoppe_path+' --out '+ hoppe_nrsc_path + filenamelist[i]
-    print(cmd)
-    os.system(cmd)    
-    print('Done:', i)
+    if hoppe_idx < len(filelist):
+        hoppe_path = hoppeoutpath+'\\'+filenamelist[hoppe_idx]
+        if os.path.exists(hoppe_path):        
+            cmd = exe_path+' --in '+hoppe_path+' --out '+ hoppe_nrsc_path + filenamelist[hoppe_idx]
+            print(cmd)
+            os.system(cmd)
+            hoppe_idx += 1

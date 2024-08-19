@@ -35,10 +35,10 @@ def cal_res(filename):
     try:
         gt_normal = np.asarray(o3d.io.read_point_cloud(input_path + filename).normals)
         ori_normal = np.asarray(o3d.io.read_point_cloud(orioutpath + filename).normals)
-        o3d_normal = np.asarray(o3d.io.read_point_cloud(o3destoutpath + filename).normals)
+        pca_normal = np.asarray(o3d.io.read_point_cloud(pcaoutpath + filename).normals)
         hoppe_normal = np.asarray(o3d.io.read_point_cloud(hoppeoutpath + filename).normals)
         ori_nrsc_normal = np.asarray(o3d.io.read_point_cloud(ori_nrsc_path + filename).normals)
-        o3d_nrsc_normal = np.asarray(o3d.io.read_point_cloud(o3d_nrsc_path + filename).normals)
+        pca_nrsc_normal = np.asarray(o3d.io.read_point_cloud(pca_nrsc_path + filename).normals)
         hoppe_nrsc_normal = np.asarray(o3d.io.read_point_cloud(hoppe_nrsc_path + filename).normals)
     except:
         print('Error:', filename)
@@ -46,18 +46,18 @@ def cal_res(filename):
     
     loss = {}
     loss['ori_loss'] = cal_loss(gt_normal, ori_normal)
-    loss['o3d_loss'] = cal_loss(gt_normal, o3d_normal)
+    loss['pca_loss'] = cal_loss(gt_normal, pca_normal)
     loss['hoppe_loss'] = cal_loss(gt_normal, hoppe_normal)
     loss['ori_nrsc_loss'] = cal_loss(gt_normal, ori_nrsc_normal)
-    loss['o3d_nrsc_loss'] = cal_loss(gt_normal, o3d_nrsc_normal)
+    loss['pca_nrsc_loss'] = cal_loss(gt_normal, pca_nrsc_normal)
     loss['hoppe_nrsc_loss'] = cal_loss(gt_normal, hoppe_nrsc_normal)
     
     inc = {}
     inc['ori_inc'] = cal_inc(gt_normal, ori_normal)
-    inc['o3d_inc'] = cal_inc(gt_normal, o3d_normal)
+    inc['pca_inc'] = cal_inc(gt_normal, pca_normal)
     inc['hoppe_inc'] = cal_inc(gt_normal, hoppe_normal)
     inc['ori_nrsc_inc'] = cal_inc(gt_normal, ori_nrsc_normal)
-    inc['o3d_nrsc_inc'] = cal_inc(gt_normal, o3d_nrsc_normal)
+    inc['pca_nrsc_inc'] = cal_inc(gt_normal, pca_nrsc_normal)
     inc['hoppe_nrsc_inc'] = cal_inc(gt_normal, hoppe_nrsc_normal)
     
     # 临界区

@@ -13,7 +13,7 @@ for i in range(len(filelist)):
         pcd.normals = o3d.utility.Vector3dVector(normals)
     write_xyznxnynz(pcd, orioutpath+'\\'+filenamelist[i])
     pcd.normals = o3d.utility.Vector3dVector(normals)
-    write_xyznxnynz(pcd, o3destoutpath+'\\'+filenamelist[i])
+    write_xyznxnynz(pcd, pcaoutpath+'\\'+filenamelist[i])
     # pcd.orient_normals_consistent_tangent_plane(10)
     # write_xyznxnynz(pcd, hoppeoutpath+'\\'+filenamelist[i])
     print('Done:', i)
