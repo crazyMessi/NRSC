@@ -31,6 +31,7 @@ def write_xyznxnynz(pcd,filename):
         for i in range(len(xyz)):
             f.write("%f %f %f %f %f %f\n" % (xyz[i][0], xyz[i][1], xyz[i][2], nxnynz[i][0], nxnynz[i][1], nxnynz[i][2]))
     print('Done:', filename)
+    
 pcaoutpath = output_path+'\\'+'pca'
 hoppeoutpath = output_path+'\\'+'hoppe'
 if not os.path.exists(output_path):
