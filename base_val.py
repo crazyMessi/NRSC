@@ -1,8 +1,8 @@
 import open3d as o3d
 import os
 
-input_path = 'D:\WorkData\ipsr_explore\input\scene_raw/'
-output_path = 'D:/WorkData/NRSC/output/scene_raw/'
+input_path = 'D:\WorkData\ipsr_explore\input\scenenet_v2_taugh_noisy_full/'
+output_path = 'D:/WorkData/NRSC/output/scenenet_v2_taugh_noisy_full/'
 if not os.path.exists(output_path):
     os.makedirs(output_path)
 
@@ -48,7 +48,7 @@ hoppe_nrsc_path = output_path + '/hoppe_nrsc/'
 if not os.path.exists(hoppe_nrsc_path):
     os.makedirs(hoppe_nrsc_path)
 
-exe_path = "D:/Work/CG/myProject/NRSC_OP/NRSC-OP-EXE/normal_orientation_propagation_for_NRSC.exe"
+exe_path = "D:/Documents/zhudoongli/CG/project/NormalEstimation/NRSC/NRSC-OP-EXE/normal_orientation_propagation_for_NRSC.exe"
 
 pcaoutpath = output_path+'\\'+'pca/'
 hoppeoutpath = output_path+'\\'+'hoppe/'

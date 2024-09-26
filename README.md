@@ -6,9 +6,15 @@ prepare.py: 得到ori、pca的结果。 ori是为了查看flip在gt上的准确�
 
 hoppe.py:得到hoppe的结果。hoppe一般比较慢
 
-run_nrsc.py:得到nrsc分别在ori pca和hoppe上的结果
+run_nrsc.py:得到nrsc分别在ori、pca、hoppe上的结果。run_nrsc会等待前二者的结果
 
 
+使用方法：
+
+1. 在base_val中指定input、output path
+2. 运行prepare
+3. 运行hoppe
+4. 运行run_nrsc
 
 
 

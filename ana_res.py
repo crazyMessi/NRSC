@@ -2,6 +2,7 @@ from base_val import *
 import os
 import open3d as o3d
 import numpy as np
+from cluster import Disjoint_cluster
 
 def cal_loss(gt,x):
     # cal angle loss
@@ -30,9 +31,28 @@ final_inc = {}
 import threading
 lock = threading.Lock()
 
+multi_thread = True
+
+def get_biggest_component_idx(pcd):
+    # get biggest component's points idx in pcd
+    labels,_ = Disjoint_cluster(pcd.points, 0.1,20,verbose= not multi_thread)
+    labelset = set(labels)
+    # labelset.remove(-1)
+    labelset = list(labelset)
+    max_len = 0
+    max_idx = 0
+    for i in labelset:
+        if len(labels[labels==i]) > max_len:
+            max_len = len(labels[labels==i])
+            max_idx = i
+    return labels == max_idx
+
+
 
 def cal_res(filename):
     try:
+        # pcd = o3d.io.read_point_cloud(input_path + filename)
+        # idx = get_biggest_component_idx(pcd)
         gt_normal = np.asarray(o3d.io.read_point_cloud(input_path + filename).normals)
         ori_normal = np.asarray(o3d.io.read_point_cloud(orioutpath + filename).normals)
         pca_normal = np.asarray(o3d.io.read_point_cloud(pcaoutpath + filename).normals)
@@ -43,6 +63,24 @@ def cal_res(filename):
     except:
         print('Error:', filename)
         return
+    
+    # print('len bigget component:', len(idx))
+    # # 将最大连通域的点云输出到temp文件夹
+    # pcd.points = o3d.utility.Vector3dVector(np.asarray(pcd.points)[idx])
+    # pcd.normals = o3d.utility.Vector3dVector(np.asarray(pcd.normals)[idx])
+    
+    # if not os.path.exists('biggest_component/'):
+    #     os.makedirs('biggest_component/')
+
+    # o3d.io.write_point_cloud('biggest_component/'+filename, pcd)
+    
+    # gt_normal = gt_normal[idx]
+    # ori_normal = ori_normal[idx]
+    # pca_normal = pca_normal[idx]
+    # # hoppe_normal = hoppe_normal[idx]
+    # ori_nrsc_normal = ori_nrsc_normal[idx]
+    # pca_nrsc_normal = pca_nrsc_normal[idx]
+    # # hoppe_nrsc_normal = hoppe_nrsc_normal[idx]
     
     loss = {}
     loss['ori_loss'] = cal_loss(gt_normal, ori_normal)
@@ -66,42 +104,23 @@ def cal_res(filename):
     final_inc[filename] = inc
     lock.release()
     print('Done:', filename)
-    
-threads = []
-for i in range(0,15):
-    t = threading.Thread(target=cal_res, args=(filenamelist[i],))
-    threads.append(t)
-    t.start()
-for t in threads:
-    t.join()
 
-threads = []
-for i in range(15,30):
-    t = threading.Thread(target=cal_res, args=(filenamelist[i],))
-    threads.append(t)
-    t.start()
-for t in threads:
-    t.join()
-
-threads = []
-for i in range(30,45):
-    t = threading.Thread(target=cal_res, args=(filenamelist[i],))
-    threads.append(t)
-    t.start()
-for t in threads:
-    t.join()
-    
-threads = []
-for i in range(45,60):
-    t = threading.Thread(target=cal_res, args=(filenamelist[i],))
-    threads.append(t)
-    t.start()
-
+if multi_thread:
+    threads = []
+    for i in range(0, len(filenamelist)):
+        t = threading.Thread(target=cal_res, args=(filenamelist[i],))
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+else:
+    for i in range(0, len(filenamelist)):
+        cal_res(filenamelist[i])
     
     
     
 # save as csv
-respath = 'res/ipsr_demo/'
+respath = 'res/scnennetv2_noisy/'
 if not os.path.exists(respath):
     os.makedirs(respath)
 import pandas as pd

@@ -2,3 +2,8 @@ _pycache_
 res
 *.csv
 *.xlsx
+__pycache__
+__pycache__/*
+temp
+__pycache__/base_val.cpython-37.pyc
+*.pyc
